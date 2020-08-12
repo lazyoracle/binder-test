@@ -11,14 +11,14 @@ WORKDIR /usr/app
 USER 1001:1001
 COPY --chown=1001:1001 environment.yml /usr/app
 RUN /opt/conda/bin/conda init {bash,fish}
-RUN /opt/conda/bin/conda create --name deepfwi --clone caliban
-RUN /opt/conda/bin/conda init {bash,fish}
+#RUN /opt/conda/bin/conda create --name deepfwi --clone caliban
+#RUN /opt/conda/bin/conda init {bash,fish}
 #RUN /opt/conda/bin/conda activate caliban
 
 RUN if [ "$GPU" = 1 ]; then \
 /opt/conda/bin/conda install cudatoolkit=$CUDA_VERSION -c pytorch; \
 fi;
-RUN /opt/conda/bin/conda env update --name deepfwi --file environment.yml && \
+RUN /opt/conda/bin/conda env update --file environment.yml && \
 /opt/conda/bin/conda clean -y -q --all
 COPY --chown=1001:1001 . /usr/app/.
 
