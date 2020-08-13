@@ -12,7 +12,7 @@ WORKDIR /usr/app
 USER 1001:1001
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
 RUN chmod +x Miniconda3-py37_4.8.3-Linux-x86_64.sh
-RUN bash ~/Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/miniconda3
+RUN bash Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/miniconda3
 RUN /opt/conda/bin/conda init {bash,fish}
 COPY --chown=1001:1001 environment.yml /usr/app
 RUN /opt/conda/bin/conda init {bash,fish}
