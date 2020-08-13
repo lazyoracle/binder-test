@@ -14,9 +14,9 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.
 RUN chmod +x Miniconda3-py37_4.8.3-Linux-x86_64.sh
 RUN bash Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/miniconda3
 ARG CONDA=${HOME}/miniconda3/bin
-RUN ${CONDA}/conda init {bash,fish}
+RUN ${CONDA}/conda init
 COPY --chown=1001:1001 environment.yml /usr/app
-RUN ${CONDA}/conda init {bash,fish}
+# RUN ${CONDA}/conda init {bash,fish}
 #RUN /opt/conda/bin/conda create --name deepfwi --clone caliban
 #RUN /opt/conda/bin/conda init {bash,fish}
 #RUN /opt/conda/bin/conda activate caliban
