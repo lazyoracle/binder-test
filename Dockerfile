@@ -24,7 +24,7 @@ COPY --chown=1001:1001 environment.yml /usr/app
 RUN if [ "$GPU" = 1 ]; then \
 ${CONDA}/conda install cudatoolkit=$CUDA_VERSION -c pytorch; \
 fi;
-RUN ${CONDA}/conda env update --file environment.yml && \
+RUN ${CONDA}/conda env update --name base --file environment.yml && \
 ${CONDA}/conda clean -y -q --all
 COPY --chown=1001:1001 . /usr/app/.
 
