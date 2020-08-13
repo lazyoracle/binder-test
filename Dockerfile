@@ -13,18 +13,19 @@ USER 1001:1001
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
 RUN chmod +x Miniconda3-py37_4.8.3-Linux-x86_64.sh
 RUN bash Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/miniconda3
-RUN /opt/conda/bin/conda init {bash,fish}
+ARG CONDA=${HOME}/miniconda3/bin
+RUN ${CONDA}/conda init {bash,fish}
 COPY --chown=1001:1001 environment.yml /usr/app
-RUN /opt/conda/bin/conda init {bash,fish}
+RUN ${CONDA}/conda init {bash,fish}
 #RUN /opt/conda/bin/conda create --name deepfwi --clone caliban
 #RUN /opt/conda/bin/conda init {bash,fish}
 #RUN /opt/conda/bin/conda activate caliban
 
 RUN if [ "$GPU" = 1 ]; then \
-/opt/conda/bin/conda install cudatoolkit=$CUDA_VERSION -c pytorch; \
+${CONDA}/conda install cudatoolkit=$CUDA_VERSION -c pytorch; \
 fi;
-RUN /opt/conda/bin/conda env update --file environment.yml && \
-/opt/conda/bin/conda clean -y -q --all
+RUN ${CONDA}/conda env update --file environment.yml && \
+${CONDA}/conda clean -y -q --all
 COPY --chown=1001:1001 . /usr/app/.
 
 RUN echo "Installing Apex"
