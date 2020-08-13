@@ -1,7 +1,7 @@
 ARG GPU=1
 ARG CUDA_VERSION=10.1
 
-FROM gcr.io/blueshift-playground/blueshift:gpu
+FROM ubuntu:bionic-20200713
 RUN apt update && apt install -qq -o=Dpkg::Use-Pty=0 fish -y
 RUN [ $(getent group 1001) ] || groupadd --gid 1001 1001
 RUN useradd --no-log-init --no-create-home -u 1001 -g 1001 --shell /bin/bash esowc
@@ -9,6 +9,10 @@ RUN mkdir -m 777 /usr/app /.creds /home/esowc
 ENV HOME=/home/esowc
 WORKDIR /usr/app
 USER 1001:1001
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
+RUN chmod +x Miniconda3-py37_4.8.3-Linux-x86_64.sh
+RUN bash ~/Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/miniconda3
+RUN /opt/conda/bin/conda init {bash,fish}
 COPY --chown=1001:1001 environment.yml /usr/app
 RUN /opt/conda/bin/conda init {bash,fish}
 #RUN /opt/conda/bin/conda create --name deepfwi --clone caliban
