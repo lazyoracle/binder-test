@@ -1,0 +1,19 @@
+name: Qiskit Textbook Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on:  macos-10.15
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install qiskit-textbook
+      run: |
+        git clone https://github.com/qiskit-community/qiskit-textbook
+        python -m pip install --upgrade pip
+        pip install qiskit-textbook-src/
